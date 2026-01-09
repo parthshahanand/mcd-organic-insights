@@ -8,9 +8,9 @@
   Built with Next.js 16 • React 19 • Tailwind CSS • Recharts
 </p>
 
-<p align="center">
-### [mcd2025.vercel.app](https://mcd2025.vercel.app/)
-</p>
+<h3 align="center">
+[mcd2025.vercel.app](https://mcd2025.vercel.app/)
+</h3>
 ---
 
 ## 📊 Overview
