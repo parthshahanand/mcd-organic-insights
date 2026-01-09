@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="docs/screenshots/dashboard-overview.png" alt="McDonald's Organic Insights Dashboard" width="100%">
-</p>
-
 <h1 align="center">🍟 McDonald's Organic Insights Dashboard</h1>
 
 <p align="center">
@@ -180,7 +176,6 @@ csv-dash/
 
 For questions, feedback, or collaboration inquiries:
 
-**Parth Shah Anand**  
 📩 [parth.shahanand@cossette.com](mailto:parth.shahanand@cossette.com)
 
 ---
