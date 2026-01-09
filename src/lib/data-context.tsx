@@ -1,0 +1,151 @@
+'use client';
+
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { Post, Filters, DashboardStats, Network, PostType, Language } from '@/types/post';
+import { fetchAndParseData } from '@/lib/csv-parser';
+import dayjs from 'dayjs';
+
+interface DataContextType {
+    posts: Post[];
+    filteredPosts: Post[];
+    organicPosts: Post[];
+    filters: Filters;
+    setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+    stats: DashboardStats;
+    allTags: string[];
+    allPlacements: string[];
+    isLoading: boolean;
+    error: string | null;
+}
+
+export const BOOSTED_POST_IDS = ['7490691524334816517'];
+
+const DataContext = createContext<DataContextType | undefined>(undefined);
+
+export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [filters, setFilters] = useState<Filters>({
+        networks: [],
+        postTypes: [],
+        placements: [],
+        selectedMonths: [],
+        tags: [],
+        language: 'ALL',
+        searchQuery: '',
+        dateRange: undefined,
+    });
+
+    useEffect(() => {
+        fetchAndParseData()
+            .then((data) => {
+                setPosts(data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                setError(err.message || 'Failed to load social media data');
+                setIsLoading(false);
+            });
+    }, []);
+
+    const allTags = useMemo(() => {
+        const tags = new Set<string>();
+        posts.forEach((post) => post.tags.forEach((tag) => tags.add(tag)));
+        return Array.from(tags).sort();
+    }, [posts]);
+
+    const allPlacements = useMemo(() => {
+        const placements = new Set<string>();
+        posts.forEach((post) => {
+            if (post.placement) placements.add(post.placement);
+        });
+        return Array.from(placements).sort();
+    }, [posts]);
+
+    const filteredPosts = useMemo(() => {
+        return posts.filter((post) => {
+            if (filters.networks.length > 0 && !filters.networks.includes(post.network)) return false;
+            if (filters.postTypes.length > 0 && !filters.postTypes.includes(post.postType)) return false;
+            if (filters.placements.length > 0 && !filters.placements.includes(post.placement)) return false;
+            if (filters.tags.length > 0 && !filters.tags.some((tag) => post.tags.includes(tag))) return false;
+            if (filters.language !== 'ALL' && post.language !== filters.language) return false;
+
+            if (filters.selectedMonths.length > 0) {
+                const postMonth = dayjs(post.publishedAt).format('MMMM');
+                if (!filters.selectedMonths.includes(postMonth)) return false;
+            }
+
+            if (filters.dateRange?.from) {
+                const postDate = dayjs(post.publishedAt);
+                const from = dayjs(filters.dateRange.from).startOf('day');
+                if (postDate.isBefore(from)) return false;
+
+                if (filters.dateRange.to) {
+                    const to = dayjs(filters.dateRange.to).endOf('day');
+                    if (postDate.isAfter(to)) return false;
+                }
+            }
+
+            if (filters.searchQuery) {
+                const q = filters.searchQuery.toLowerCase();
+                const match =
+                    post.text.toLowerCase().includes(q) ||
+                    post.network.toLowerCase().includes(q) ||
+                    post.tags.some(t => t.toLowerCase().includes(q));
+                if (!match) return false;
+            }
+
+            return true;
+        });
+    }, [posts, filters]);
+
+    const organicPosts = useMemo(() => {
+        return filteredPosts.filter(post => !BOOSTED_POST_IDS.includes(post.id));
+    }, [filteredPosts]);
+
+    const stats = useMemo<DashboardStats>(() => {
+        const totalPosts = organicPosts.length;
+        const totalImpressions = organicPosts.reduce((acc, post) => acc + post.impressions, 0);
+        const totalEngagements = organicPosts.reduce((acc, post) => acc + post.engagements, 0);
+        const totalShares = organicPosts.reduce((acc, post) => acc + post.shares, 0);
+
+        const avgEngagementRate = totalImpressions > 0 ? (totalEngagements * 100) / totalImpressions : 0;
+        const avgShareRatio = totalEngagements > 0 ? (totalShares * 100) / totalEngagements : 0;
+
+        return {
+            totalPosts,
+            totalImpressions,
+            totalEngagements,
+            avgEngagementRate,
+            avgShareRatio,
+        };
+    }, [organicPosts]);
+
+    return (
+        <DataContext.Provider
+            value={{
+                posts,
+                filteredPosts,
+                organicPosts,
+                filters,
+                setFilters,
+                stats,
+                allTags,
+                allPlacements,
+                isLoading,
+                error,
+            }}
+        >
+            {children}
+        </DataContext.Provider>
+    );
+};
+
+export const useData = () => {
+    const context = useContext(DataContext);
+    if (context === undefined) {
+        throw new Error('useData must be used within a DataProvider');
+    }
+    return context;
+};
