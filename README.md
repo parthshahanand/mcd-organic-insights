@@ -9,7 +9,7 @@
 </p>
 
 <h3 align="center">
-[mcd2025.vercel.app](https://mcd2025.vercel.app/)
+https://mcd2025.vercel.app/
 </h3>
 ---
 
