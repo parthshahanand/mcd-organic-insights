@@ -19,13 +19,12 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 
-const COLORS = [
-    'hsl(var(--primary))',
-    'hsl(var(--chart-2))',
-    'hsl(var(--chart-3))',
-    'hsl(var(--chart-4))',
-    'hsl(var(--chart-5))',
-];
+const NETWORK_COLORS: Record<string, string> = {
+    INSTAGRAM: '#db2777', // pink-600
+    FACEBOOK: '#1d4ed8',  // blue-700
+    TWITTER: '#27272a',   // zinc-800 (X)
+    TIKTOK: '#06b6d4',    // cyan-500
+};
 
 import { ChartPie } from '@phosphor-icons/react/dist/ssr/ChartPie';
 
@@ -98,7 +97,7 @@ export const NetworkBreakdown: React.FC = () => {
                                 {data.map((entry, index) => (
                                     <Cell
                                         key={`cell-${index}`}
-                                        fill={COLORS[index % COLORS.length]}
+                                        fill={NETWORK_COLORS[entry.name as keyof typeof NETWORK_COLORS] || 'hsl(var(--muted))'}
                                         stroke="hsl(var(--card))"
                                         strokeWidth={12}
                                         className="outline-none"
