@@ -20,16 +20,19 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { InstagramLogo } from '@phosphor-icons/react/dist/ssr/InstagramLogo';
-import { FacebookLogo } from '@phosphor-icons/react/dist/ssr/FacebookLogo';
-import { TwitterLogo } from '@phosphor-icons/react/dist/ssr/TwitterLogo';
-import { TiktokLogo } from '@phosphor-icons/react/dist/ssr/TiktokLogo';
-import { ArrowsDownUp } from '@phosphor-icons/react/dist/ssr/ArrowsDownUp';
-import { CaretLeft } from '@phosphor-icons/react/dist/ssr/CaretLeft';
-import { CaretRight } from '@phosphor-icons/react/dist/ssr/CaretRight';
-import { Eye } from '@phosphor-icons/react/dist/ssr/Eye';
-import { ChatText } from '@phosphor-icons/react/dist/ssr/ChatText';
-import { ArrowSquareOut } from '@phosphor-icons/react/dist/ssr/ArrowSquareOut';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+    InstagramIcon,
+    Facebook01Icon,
+    NewTwitterRectangleIcon,
+    TiktokIcon,
+    Sorting01Icon,
+    ArrowLeft01Icon,
+    ArrowRight01Icon,
+    ViewIcon,
+    Message01Icon,
+    LinkSquare02Icon
+} from '@hugeicons/core-free-icons';
 import dayjs from 'dayjs';
 
 export const PostsTable: React.FC = () => {
@@ -81,10 +84,10 @@ export const PostsTable: React.FC = () => {
 
     const getNetworkIcon = (network: string) => {
         switch (network) {
-            case 'TIKTOK': return <TiktokLogo weight="fill" className="w-5 h-5 text-[#000000]" />;
-            case 'INSTAGRAM': return <InstagramLogo weight="fill" className="w-5 h-5 text-[#E4405F]" />;
-            case 'FACEBOOK': return <FacebookLogo weight="fill" className="w-5 h-5 text-[#1877F2]" />;
-            case 'TWITTER': return <TwitterLogo weight="fill" className="w-5 h-5 text-[#1DA1F2]" />;
+            case 'TIKTOK': return <HugeiconsIcon icon={TiktokIcon} size={20} className="text-[#000000]" />;
+            case 'INSTAGRAM': return <HugeiconsIcon icon={InstagramIcon} size={20} className="text-[#E4405F]" />;
+            case 'FACEBOOK': return <HugeiconsIcon icon={Facebook01Icon} size={20} className="text-[#1877F2]" />;
+            case 'TWITTER': return <HugeiconsIcon icon={NewTwitterRectangleIcon} size={20} className="text-[#1DA1F2]" />;
             default: return null;
         }
     };
@@ -121,22 +124,22 @@ export const PostsTable: React.FC = () => {
                             <TableRow className="bg-muted/30 hover:bg-muted/30 border-b border-border/40">
                                 <TableHead className="w-[60px] pl-6 text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80">Platform</TableHead>
                                 <TableHead onClick={() => handleSort('publishedAt')} className="w-[100px] cursor-pointer hover:text-primary transition-colors text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80 whitespace-nowrap" aria-label={`Sort by date ${sortConfig?.key === 'publishedAt' ? (sortConfig.direction === 'asc' ? 'descending' : 'ascending') : ''}`}>
-                                    Date <ArrowsDownUp className="ml-1 h-3 w-3 inline opacity-40" />
+                                    Date <HugeiconsIcon icon={Sorting01Icon} size={12} className="ml-1 inline opacity-40" />
                                 </TableHead>
                                 <TableHead className="min-w-[300px] max-w-md text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80">Caption</TableHead>
                                 <TableHead className="w-[80px] text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80">URL</TableHead>
                                 <TableHead className="w-[90px] text-center text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80">Type</TableHead>
                                 <TableHead onClick={() => handleSort('impressions')} className="w-[100px] cursor-pointer hover:text-primary text-right whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80" aria-label={`Sort by impressions ${sortConfig?.key === 'impressions' ? (sortConfig.direction === 'asc' ? 'descending' : 'ascending') : ''}`}>
-                                    Impr. <ArrowsDownUp className="ml-1 h-3 w-3 inline opacity-40" />
+                                    Impr. <HugeiconsIcon icon={Sorting01Icon} size={12} className="ml-1 inline opacity-40" />
                                 </TableHead>
                                 <TableHead onClick={() => handleSort('engagements')} className="w-[100px] cursor-pointer hover:text-primary text-right whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80" aria-label={`Sort by engagements ${sortConfig?.key === 'engagements' ? (sortConfig.direction === 'asc' ? 'descending' : 'ascending') : ''}`}>
-                                    Eng. <ArrowsDownUp className="ml-1 h-3 w-3 inline opacity-40" />
+                                    Eng. <HugeiconsIcon icon={Sorting01Icon} size={12} className="ml-1 inline opacity-40" />
                                 </TableHead>
                                 <TableHead onClick={() => handleSort('engagementRate')} className="w-[80px] cursor-pointer hover:text-primary text-right whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80" aria-label={`Sort by engagement rate ${sortConfig?.key === 'engagementRate' ? (sortConfig.direction === 'asc' ? 'descending' : 'ascending') : ''}`}>
-                                    ER% <ArrowsDownUp className="ml-1 h-3 w-3 inline opacity-40" />
+                                    ER% <HugeiconsIcon icon={Sorting01Icon} size={12} className="ml-1 inline opacity-40" />
                                 </TableHead>
                                 <TableHead onClick={() => handleSort('shareRatio')} className="w-[80px] cursor-pointer hover:text-primary text-right whitespace-nowrap text-[10px] font-bold uppercase tracking-[0.1em] text-muted-foreground/80 pr-6" aria-label={`Sort by share ratio ${sortConfig?.key === 'shareRatio' ? (sortConfig.direction === 'asc' ? 'descending' : 'ascending') : ''}`}>
-                                    Share% <ArrowsDownUp className="ml-1 h-3 w-3 inline opacity-40" />
+                                    Share% <HugeiconsIcon icon={Sorting01Icon} size={12} className="ml-1 inline opacity-40" />
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -168,7 +171,7 @@ export const PostsTable: React.FC = () => {
                                             <TableCell>
                                                 {post.url && (
                                                     <a href={post.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors inline-block" title="View Source Post">
-                                                        <ArrowSquareOut size={18} weight="bold" />
+                                                        <HugeiconsIcon icon={LinkSquare02Icon} size={18} />
                                                     </a>
                                                 )}
                                             </TableCell>
@@ -217,7 +220,7 @@ export const PostsTable: React.FC = () => {
                         className="h-8 px-4 font-bold text-[10px] uppercase tracking-widest border-border/50 bg-muted/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-none"
                         aria-label="Previous page"
                     >
-                        <CaretLeft className="h-3 w-3 mr-1.5" weight="bold" /> Previous
+                        <HugeiconsIcon icon={ArrowLeft01Icon} size={12} className="mr-1.5" /> Previous
                     </Button>
                     <Button
                         variant="outline"
@@ -227,7 +230,7 @@ export const PostsTable: React.FC = () => {
                         className="h-8 px-4 font-bold text-[10px] uppercase tracking-widest border-border/50 bg-muted/20 hover:bg-primary hover:text-primary-foreground transition-all shadow-none"
                         aria-label="Next page"
                     >
-                        Next <CaretRight className="h-3 w-3 ml-1.5" weight="bold" />
+                        Next <HugeiconsIcon icon={ArrowRight01Icon} size={12} className="ml-1.5" />
                     </Button>
                 </div>
             </div>

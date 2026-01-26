@@ -38,3 +38,15 @@ export interface DashboardStats {
   avgEngagementRate: number; // (totalEngagements * 100) / totalImpressions
   avgShareRatio: number;     // (totalShares * 100) / totalEngagements
 }
+export interface FollowerDataPoint {
+  date: Date;
+  month: string; // Formatted as "December 2025"
+  facebook: number;
+  instagramEN: number;
+  instagramFR: number;
+  tiktokEN: number;
+  tiktokFR: number;
+  xEN: number;
+  xFR: number;
+  total: number; // Sum of all platforms
+}

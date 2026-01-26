@@ -8,7 +8,6 @@ import dayjs from 'dayjs';
 interface DataContextType {
     posts: Post[];
     filteredPosts: Post[];
-    organicPosts: Post[];
     filters: Filters;
     setFilters: React.Dispatch<React.SetStateAction<Filters>>;
     stats: DashboardStats;
@@ -100,15 +99,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         });
     }, [posts, filters]);
 
-    const organicPosts = useMemo(() => {
-        return filteredPosts.filter(post => !BOOSTED_POST_IDS.includes(post.id));
-    }, [filteredPosts]);
-
     const stats = useMemo<DashboardStats>(() => {
-        const totalPosts = organicPosts.length;
-        const totalImpressions = organicPosts.reduce((acc, post) => acc + post.impressions, 0);
-        const totalEngagements = organicPosts.reduce((acc, post) => acc + post.engagements, 0);
-        const totalShares = organicPosts.reduce((acc, post) => acc + post.shares, 0);
+        const totalPosts = filteredPosts.length;
+        const totalImpressions = filteredPosts.reduce((acc, post) => acc + post.impressions, 0);
+        const totalEngagements = filteredPosts.reduce((acc, post) => acc + post.engagements, 0);
+        const totalShares = filteredPosts.reduce((acc, post) => acc + post.shares, 0);
 
         const avgEngagementRate = totalImpressions > 0 ? (totalEngagements * 100) / totalImpressions : 0;
         const avgShareRatio = totalEngagements > 0 ? (totalShares * 100) / totalEngagements : 0;
@@ -120,14 +115,13 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             avgEngagementRate,
             avgShareRatio,
         };
-    }, [organicPosts]);
+    }, [filteredPosts]);
 
     return (
         <DataContext.Provider
             value={{
                 posts,
                 filteredPosts,
-                organicPosts,
                 filters,
                 setFilters,
                 stats,
