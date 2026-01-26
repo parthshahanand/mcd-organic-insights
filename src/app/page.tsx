@@ -7,7 +7,9 @@ import { NetworkBreakdown } from '@/components/network-breakdown';
 import { PostsTable } from '@/components/posts-table';
 import { useData } from '@/lib/data-context';
 import { StatCards as Stats } from '@/components/stat-cards';
-import { X } from '@phosphor-icons/react/dist/ssr/X';
+import { FollowersChart } from '@/components/followers-chart';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Cancel01Icon } from '@hugeicons/core-free-icons';
 
 export default function DashboardPage() {
   const { isLoading, error } = useData();
@@ -28,7 +30,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="flex flex-col items-center gap-4 text-center max-w-md">
           <div className="w-12 h-12 bg-destructive/10 text-destructive rounded-full flex items-center justify-center">
-            <X className="w-6 h-6" weight="bold" />
+            <HugeiconsIcon icon={Cancel01Icon} size={24} />
           </div>
           <h2 className="text-xl font-sans font-bold">Data Access Error</h2>
           <p className="text-muted-foreground text-sm">{error}</p>
@@ -47,6 +49,8 @@ export default function DashboardPage() {
       </div>
 
       <Stats />
+
+      <FollowersChart />
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-3 space-y-8">

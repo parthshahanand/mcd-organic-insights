@@ -29,7 +29,13 @@ This dashboard was built to provide marketing teams with:
 ## ✨ Features
 
 ### 📈 Executive Overview
-- **Four Key Performance Indicators**: Total Posts, Total Impressions, Total Engagements, and Average Engagement Rate — displayed in prominent stat cards with trend indicators.
+- **Five Key Performance Indicators**: Total Followers, Total Posts, Total Impressions, Total Engagements, and Average Engagement Rate — displayed in prominent stat cards with trend indicators.
+- **Dynamic Icons**: Stat cards adapt their iconography based on network filters (e.g., showing the Facebook logo when filtered to Facebook).
+
+### 💹 Follower Trends
+- **Platform Growth Visualization**: A full-width line chart tracking monthly follower counts for all platforms.
+- **Independent Filtering**: Toggle between English and French audiences and specific platforms independently of the main dashboard filters.
+- **Dynamic Y-Axis**: Displays actual follower values with intelligent formatting (K/M) for better readability.
 
 ### 📉 Performance Over Time
 - **Interactive Area Chart**: Visualize any metric (Impressions, Engagements, ER%, Shares, Share Ratio) over time with smooth animations.
@@ -49,7 +55,7 @@ This dashboard was built to provide marketing teams with:
 
 ### 📋 Content Inventory Table
 - **Sortable Columns**: Click any header to sort by Date, Impressions, Engagements, ER%, or Share Ratio.
-- **Boosted Post Highlighting**: Paid/boosted posts are highlighted in rose and tagged with a "BOOSTED" badge.
+- **Boosted Post Integration**: Paid and boosted posts are now seamlessly integrated into all dashboard calculations while retaining a rose highlight and "BOOSTED" badge for visual clarity.
 - **Tabular Numbers**: All numeric data uses fixed-width digits for perfect vertical alignment.
 - **Pagination**: Navigate through large datasets with customizable page sizes (10, 25, 50, 100 entries).
 
@@ -95,7 +101,7 @@ This dashboard was built to provide marketing teams with:
 | **Styling** | [Tailwind CSS 4](https://tailwindcss.com/) |
 | **Components** | [shadcn/ui](https://ui.shadcn.com/) |
 | **Charts** | [Recharts](https://recharts.org/) |
-| **Icons** | [Phosphor Icons](https://phosphoricons.com/) |
+| **Icons** | [HugeIcons](https://hugeicons.com/) |
 | **Date Handling** | [Day.js](https://day.js.org/) |
 | **CSV Parsing** | [PapaParse](https://www.papaparse.com/) |
 | **Typography** | [Inter Variable](https://rsms.me/inter/) via @fontsource |
@@ -157,7 +163,8 @@ csv-dash/
 │   │   └── globals.css       # Global styles & design tokens
 │   ├── components/
 │   │   ├── app-shell.tsx     # Layout wrapper with navbar
-│   │   ├── stat-cards.tsx    # KPI cards
+│   │   ├── stat-cards.tsx    # KPI cards including Total Followers
+│   │   ├── followers-chart.tsx # Follower monthly trends
 │   │   ├── performance-chart.tsx
 │   │   ├── network-breakdown.tsx
 │   │   ├── filters-bar.tsx   # All filter controls

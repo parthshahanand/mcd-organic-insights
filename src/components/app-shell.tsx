@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import { MagnifyingGlass } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
-import { X } from '@phosphor-icons/react/dist/ssr/X';
-import { GithubLogo } from '@phosphor-icons/react/dist/ssr/GithubLogo';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Search01Icon, Cancel01Icon, GithubIcon } from '@hugeicons/core-free-icons';
 import { useData } from '@/lib/data-context';
 import { Input } from '@/components/ui/input';
 
@@ -29,7 +28,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                     {/* Center: Search */}
                     <div className="flex-[2] flex justify-center max-w-2xl px-4">
                         <div className="w-full relative group">
-                            <MagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground transition-all group-focus-within:text-primary group-focus-within:scale-110" />
+                            <HugeiconsIcon icon={Search01Icon} size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-all group-focus-within:text-primary group-focus-within:scale-110" />
                             <Input
                                 placeholder="Search campaigns, content, tags..."
                                 className="pl-12 pr-12 h-11 bg-secondary/40 border-border/60 hover:border-border focus:bg-background focus:border-primary/40 focus:ring-4 focus:ring-primary/5 transition-all text-base rounded-xl shadow-sm"
@@ -42,7 +41,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                                     className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground hover:scale-110 transition-all p-1"
                                     aria-label="Clear search"
                                 >
-                                    <X className="w-4 h-4" weight="bold" />
+                                    <HugeiconsIcon icon={Cancel01Icon} size={16} />
                                 </button>
                             )}
                         </div>
@@ -60,7 +59,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                             className="flex items-center justify-center w-10 h-10 rounded-full bg-foreground text-background hover:scale-105 hover:shadow-lg transition-all"
                             aria-label="View source on GitHub"
                         >
-                            <GithubLogo weight="fill" className="w-5 h-5" />
+                            <HugeiconsIcon icon={GithubIcon} size={20} />
                         </a>
                     </div>
                 </header>

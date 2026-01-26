@@ -15,13 +15,14 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import dayjs from 'dayjs';
 
-import { ChartLine } from '@phosphor-icons/react/dist/ssr/ChartLine';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ChartLineData01Icon } from '@hugeicons/core-free-icons';
 
 type Aggregation = 'daily' | 'weekly' | 'monthly';
 type Metric = 'impressions' | 'engagements' | 'engagementRate' | 'shareRatio';
 
 export const PerformanceChart: React.FC = () => {
-    const { organicPosts } = useData();
+    const { filteredPosts } = useData();
     const [aggregation, setAggregation] = useState<Aggregation>('daily');
     const [selectedMetric, setSelectedMetric] = useState<Metric>('impressions');
 
@@ -34,7 +35,7 @@ export const PerformanceChart: React.FC = () => {
             shares: number
         }> = {};
 
-        organicPosts.forEach(post => {
+        filteredPosts.forEach(post => {
             let dateKey: string;
             let displayDate: string;
             const m = dayjs(post.publishedAt);
@@ -71,7 +72,7 @@ export const PerformanceChart: React.FC = () => {
                 engagementRate: d.impressions > 0 ? (d.engagements * 100) / d.impressions : 0,
                 shareRatio: d.engagements > 0 ? (d.shares * 100) / d.engagements : 0
             }));
-    }, [organicPosts, aggregation]);
+    }, [filteredPosts, aggregation]);
 
 
     const metricConfig: Record<Metric, { name: string, color: string, isPercentage: boolean }> = {
@@ -86,7 +87,7 @@ export const PerformanceChart: React.FC = () => {
             <CardHeader className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                     <CardTitle className="text-lg font-bold flex items-center gap-2">
-                        <ChartLine className="w-5 h-5 text-primary" />
+                        <HugeiconsIcon icon={ChartLineData01Icon} size={20} className="text-primary" />
                         Performance Over Time
                     </CardTitle>
                     <CardDescription className="text-[10px] font-bold uppercase tracking-widest">
@@ -180,7 +181,7 @@ export const PerformanceChart: React.FC = () => {
                 ) : (
                     <div className="flex flex-col items-center justify-center text-muted-foreground gap-2">
                         <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                            <ChartLine size={20} className="opacity-40" />
+                            <HugeiconsIcon icon={ChartLineData01Icon} size={20} className="opacity-40" />
                         </div>
                         <p className="text-[10px] font-bold uppercase tracking-widest">No data for selected period</p>
                     </div>

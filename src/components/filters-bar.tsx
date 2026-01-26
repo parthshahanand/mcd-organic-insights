@@ -15,13 +15,15 @@ import {
     DropdownMenuSeparator,
     DropdownMenuLabel,
 } from '@/components/ui/dropdown-menu';
-import { ArrowsDownUp } from '@phosphor-icons/react/dist/ssr/ArrowsDownUp';
-import { DeviceMobile } from '@phosphor-icons/react/dist/ssr/DeviceMobile';
-import { MapPin } from '@phosphor-icons/react/dist/ssr/MapPin';
-import { X } from '@phosphor-icons/react/dist/ssr/X';
-import { Globe } from '@phosphor-icons/react/dist/ssr/Globe';
-import { Tag } from '@phosphor-icons/react/dist/ssr/Tag';
-import { Calendar as CalendarIcon } from '@phosphor-icons/react/dist/ssr/Calendar';
+import { HugeiconsIcon } from '@hugeicons/react';
+import {
+    GlobalIcon,
+    SmartPhone01Icon,
+    Location01Icon,
+    Tag01Icon,
+    Calendar01Icon,
+    Cancel01Icon
+} from '@hugeicons/core-free-icons';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import dayjs from 'dayjs';
@@ -99,7 +101,7 @@ export const FiltersBar: React.FC = () => {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 gap-2">
-                            <Globe className="w-4 h-4" />
+                            <HugeiconsIcon icon={GlobalIcon} size={16} />
                             Network
                             {filters.networks.length > 0 && (
                                 <Badge variant="secondary" className="ml-1 rounded-sm px-1 font-normal">
@@ -127,7 +129,7 @@ export const FiltersBar: React.FC = () => {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 gap-2">
-                            <DeviceMobile className="w-4 h-4" />
+                            <HugeiconsIcon icon={SmartPhone01Icon} size={16} />
                             Post Type
                         </Button>
                     </DropdownMenuTrigger>
@@ -150,7 +152,7 @@ export const FiltersBar: React.FC = () => {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 gap-2">
-                            <MapPin className="w-4 h-4" />
+                            <HugeiconsIcon icon={Location01Icon} size={16} />
                             Placement
                             {filters.placements.length > 0 && (
                                 <Badge variant="secondary" className="ml-1 rounded-sm px-1 font-normal">
@@ -178,7 +180,7 @@ export const FiltersBar: React.FC = () => {
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 gap-2">
-                            <Tag className="w-4 h-4" />
+                            <HugeiconsIcon icon={Tag01Icon} size={16} />
                             Campaign Tags
                             {filters.tags.length > 0 && (
                                 <Badge variant="secondary" className="ml-1 rounded-sm px-1 font-normal">
@@ -244,7 +246,7 @@ export const FiltersBar: React.FC = () => {
                                 !filters.dateRange && "text-muted-foreground"
                             )}
                         >
-                            <CalendarIcon className="w-4 h-4" />
+                            <HugeiconsIcon icon={Calendar01Icon} size={16} />
                             {filters.dateRange?.from ? (
                                 filters.dateRange.to ? (
                                     <>
@@ -294,7 +296,7 @@ export const FiltersBar: React.FC = () => {
                     className="h-9 text-muted-foreground hover:text-destructive transition-colors"
                     onClick={resetFilters}
                 >
-                    <X className="w-4 h-4 mr-2" />
+                    <HugeiconsIcon icon={Cancel01Icon} size={16} className="mr-2" />
                     Reset All
                 </Button>
             </div>

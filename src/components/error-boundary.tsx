@@ -2,7 +2,8 @@
 
 import React, { ErrorInfo, ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
-import { Warning } from '@phosphor-icons/react/dist/ssr/Warning';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Alert01Icon } from '@hugeicons/core-free-icons';
 
 interface Props {
     children: ReactNode;
@@ -37,7 +38,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             return (
                 <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center animate-in">
                     <div className="w-16 h-16 bg-destructive/10 text-destructive rounded-2xl flex items-center justify-center mb-6">
-                        <Warning size={32} weight="bold" />
+                        <HugeiconsIcon icon={Alert01Icon} size={32} />
                     </div>
                     <h2 className="text-2xl font-bold tracking-tight mb-2">Something went wrong</h2>
                     <p className="text-muted-foreground max-w-md mx-auto mb-8 text-sm">

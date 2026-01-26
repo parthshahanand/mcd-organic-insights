@@ -26,18 +26,19 @@ const NETWORK_COLORS: Record<string, string> = {
     TIKTOK: '#06b6d4',    // cyan-500
 };
 
-import { ChartPie } from '@phosphor-icons/react/dist/ssr/ChartPie';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { PieChartIcon } from '@hugeicons/core-free-icons';
 
 type Metric = 'posts' | 'impressions' | 'engagements' | 'engagementRate' | 'shareRatio';
 
 export const NetworkBreakdown: React.FC = () => {
-    const { organicPosts } = useData();
+    const { filteredPosts } = useData();
     const [metric, setMetric] = useState<Metric>('posts');
 
     const data = React.useMemo(() => {
         const networkStats: Record<string, { posts: number, impressions: number, engagements: number, shares: number }> = {};
 
-        organicPosts.forEach(post => {
+        filteredPosts.forEach(post => {
             if (!networkStats[post.network]) {
                 networkStats[post.network] = { posts: 0, impressions: 0, engagements: 0, shares: 0 };
             }
@@ -57,7 +58,7 @@ export const NetworkBreakdown: React.FC = () => {
 
             return { name, value };
         }).filter(d => d.value > 0);
-    }, [organicPosts, metric]);
+    }, [filteredPosts, metric]);
 
     const isPercentage = metric === 'engagementRate' || metric === 'shareRatio';
 
@@ -65,7 +66,7 @@ export const NetworkBreakdown: React.FC = () => {
         <Card className="h-full flex flex-col border-border/50 animate-in" style={{ animationDelay: '600ms' }}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-lg font-bold flex items-center gap-2">
-                    <ChartPie className="w-5 h-5 text-primary" />
+                    <HugeiconsIcon icon={PieChartIcon} size={20} className="text-primary" />
                     Network Breakdown
                 </CardTitle>
                 <Select value={metric} onValueChange={(val: Metric) => setMetric(val)}>
@@ -133,7 +134,7 @@ export const NetworkBreakdown: React.FC = () => {
                 ) : (
                     <div className="flex flex-col items-center justify-center text-muted-foreground gap-2">
                         <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center">
-                            <ChartPie size={20} className="opacity-40" />
+                            <HugeiconsIcon icon={PieChartIcon} size={20} className="opacity-40" />
                         </div>
                         <p className="text-[10px] font-bold uppercase tracking-widest">No data available</p>
                     </div>
