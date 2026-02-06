@@ -10,14 +10,13 @@ import {
     YAxis,
     CartesianGrid,
     Tooltip,
-    Legend,
     ResponsiveContainer,
 } from 'recharts';
 import Papa from 'papaparse';
 import dayjs from 'dayjs';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { UserGroupIcon } from '@hugeicons/core-free-icons';
-import { FollowerDataPoint } from '@/types/post';
+import { useData } from '@/lib/data-context';
 
 const PLATFORM_COLORS: Record<string, string> = {
     FACEBOOK: '#1d4ed8',  // blue-700
@@ -33,11 +32,24 @@ const CSV_PREFIX: Record<Platform, string> = {
     X: 'X',
 };
 
+interface RawFollowerRow {
+    Date: string;
+    'FB followers': string;
+    'IGEN followers': string;
+    'IGFR followers': string;
+    'TTEN followers': string;
+    'TTFR followers': string;
+    'XEN followers': string;
+    'XFR followers': string;
+    [key: string]: string;
+}
+
 type LanguageFilter = 'EN' | 'FR' | 'ALL';
 type Platform = 'FACEBOOK' | 'INSTAGRAM' | 'TIKTOK' | 'X';
 
 export const FollowersChart: React.FC = () => {
-    const [rawData, setRawData] = useState<any[]>([]);
+    const { filters } = useData();
+    const [rawData, setRawData] = useState<RawFollowerRow[]>([]);
     const [selectedPlatform, setSelectedPlatform] = useState<Platform>('FACEBOOK');
     const [languageFilter, setLanguageFilter] = useState<LanguageFilter>('ALL');
     const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +58,7 @@ export const FollowersChart: React.FC = () => {
         fetch('/mcd-followers.csv')
             .then(res => res.text())
             .then(csv => {
-                const result = Papa.parse(csv, { header: true, skipEmptyLines: true });
+                const result = Papa.parse<RawFollowerRow>(csv, { header: true, skipEmptyLines: true });
                 setRawData(result.data);
                 setIsLoading(false);
             })
@@ -75,7 +87,7 @@ export const FollowersChart: React.FC = () => {
         // First, calculate absolute values for each month/platform based on language filter
         const absoluteData: AbsoluteDataRow[] = rawData.map(row => {
             const date = dayjs(row.Date);
-            const vals: any = {
+            const vals: Record<string, number | string> = {
                 month: date.format('MMM YYYY'),
                 timestamp: date.toDate().getTime()
             };
@@ -97,10 +109,15 @@ export const FollowersChart: React.FC = () => {
             return vals as AbsoluteDataRow;
         }).sort((a, b) => a.timestamp - b.timestamp);
 
+        // Filter by selected years
+        const filteredAbsoluteData = filters.selectedYears.length > 0
+            ? absoluteData.filter(d => filters.selectedYears.includes(dayjs(d.timestamp).format('YYYY')))
+            : absoluteData;
+
         // Find min/max for each platform to normalize
         const bounds: Record<string, { min: number, max: number }> = {};
         platforms.forEach(p => {
-            const platformValues = absoluteData.map(d => d[p]);
+            const platformValues = filteredAbsoluteData.map(d => d[p]);
             bounds[p] = {
                 min: Math.min(...platformValues),
                 max: Math.max(...platformValues)
@@ -108,8 +125,8 @@ export const FollowersChart: React.FC = () => {
         });
 
         // Create normalized data and store absolute values for tooltip
-        const processed = absoluteData.map(d => {
-            const normalized: { [key: string]: any } = {
+        const processed = filteredAbsoluteData.map(d => {
+            const normalized: Record<string, number | string> = {
                 month: d.month,
                 timestamp: d.timestamp
             };
@@ -122,7 +139,7 @@ export const FollowersChart: React.FC = () => {
         });
 
         return { processedData: processed, bounds };
-    }, [rawData, languageFilter]);
+    }, [rawData, languageFilter, filters.selectedYears]);
 
     const togglePlatform = (p: Platform) => {
         setSelectedPlatform(p);
@@ -220,7 +237,7 @@ export const FollowersChart: React.FC = () => {
                                     boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)'
                                 }}
                                 labelStyle={{ color: 'hsl(var(--muted-foreground))', marginBottom: '4px' }}
-                                formatter={(value: any, name: string) => {
+                                formatter={(value: number, name: string) => {
                                     const platform = name.split('_')[0];
                                     return [
                                         <span key={name} className="font-bold">{value.toLocaleString()}</span>,
@@ -235,9 +252,9 @@ export const FollowersChart: React.FC = () => {
                                             <div className="bg-background border border-border p-3 rounded-xl shadow-xl">
                                                 <p className="font-bold text-xs mb-2 border-b border-border pb-1">{label}</p>
                                                 <div className="space-y-1.5">
-                                                    {payload.map((entry: any) => {
-                                                        const p = entry.dataKey.split('_')[0];
-                                                        const abs = entry.payload[`${p}_abs`];
+                                                    {payload.map((entry) => {
+                                                        const p = String(entry.dataKey).split('_')[0];
+                                                        const abs = (entry.payload as Record<string, number>)[`${p}_abs`];
                                                         return (
                                                             <div key={p} className="flex items-center justify-between gap-4">
                                                                 <div className="flex items-center gap-1.5">

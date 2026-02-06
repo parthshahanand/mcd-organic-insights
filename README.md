@@ -1,146 +1,107 @@
-<h1 align="center">🍟 McDonald's Organic Insights Dashboard</h1>
+<h1 align="center">🍟 McDonald's Organic Insights</h1>
 
 <p align="center">
-  <strong>A premium, real-time analytics dashboard for tracking organic social media performance across TikTok, Instagram, Facebook, and Twitter.</strong>
+A social media analytics dashboard that turns CSV exports into interactive charts and tables.
 </p>
 
 <p align="center">
-  Built with Next.js 16 • React 19 • Tailwind CSS • Recharts
+  <a href="https://mcd2025.vercel.app/">Live Demo</a> •
+  <a href="#getting-started">Getting Started</a> •
+  <a href="#features">Features</a>
 </p>
 
-<h3 align="center">
-https://mcd2025.vercel.app/
-</h3>
+---
+
+## About
+
+This dashboard visualizes organic social media performance for **McDonald's Canada** across TikTok, Instagram, Facebook, and X. Upload a CSV export from your social listening tool, and the dashboard displays KPIs, trend charts, platform breakdowns, and a searchable content table.
+
+Built for the **Cossette × McDonald's** marketing team.
 
 ---
 
-## 📊 Overview
+## Features
 
-The **McDonald's Organic Insights Dashboard** is a high-performance, beautifully designed analytics platform created for **Cossette × McDonald's** to monitor and analyze organic social media content performance. It transforms raw CSV exports into actionable insights through elegant visualizations, advanced filtering, and detailed content breakdowns.
-
-This dashboard was built to provide marketing teams with:
-- **Real-time performance metrics** across all major social platforms
-- **Interactive data exploration** with multi-dimensional filtering
-- **Content-level insights** for optimizing future campaigns
-- **Executive-ready visualizations** for stakeholder presentations
-
----
-
-## ✨ Features
-
-### 📈 Executive Overview
-- **Five Key Performance Indicators**: Total Followers, Total Posts, Total Impressions, Total Engagements, and Average Engagement Rate — displayed in prominent stat cards with trend indicators.
-- **Dynamic Icons**: Stat cards adapt their iconography based on network filters (e.g., showing the Facebook logo when filtered to Facebook).
-
-### 💹 Follower Trends
-- **Platform Growth Visualization**: A full-width line chart tracking monthly follower counts for all platforms.
-- **Independent Filtering**: Toggle between English and French audiences and specific platforms independently of the main dashboard filters.
-- **Dynamic Y-Axis**: Displays actual follower values with intelligent formatting (K/M) for better readability.
-
-### 📉 Performance Over Time
-- **Interactive Area Chart**: Visualize any metric (Impressions, Engagements, ER%, Shares, Share Ratio) over time with smooth animations.
-- **Time Granularity**: Toggle between Daily, Weekly, and Monthly aggregations.
-
-### 🍩 Network Breakdown
-- **Donut Chart Visualization**: See how metrics are distributed across platforms (TikTok, Instagram, Facebook, Twitter).
-- **Metric Selector**: Dynamically switch between Impressions, Engagements, Shares, ER%, and Share Ratio.
-
-### 🎯 Advanced Filtering
-- **Multi-Select Filters**: Filter by Network, Post Type, Placement, and Campaign Tags.
-- **Emerald Chip Tags**: Beautifully styled campaign tag chips with instant feedback.
-- **Date Range Picker**: Select custom date ranges with a dual-month calendar.
-- **Language Toggle**: Filter by English, French, or All content.
-- **Month Selector**: Quickly filter by specific months with pill-button UI.
-- **Global Search**: Find posts by keyword across captions and tags.
-
-### 📋 Content Inventory Table
-- **Sortable Columns**: Click any header to sort by Date, Impressions, Engagements, ER%, or Share Ratio.
-- **Boosted Post Integration**: Paid and boosted posts are now seamlessly integrated into all dashboard calculations while retaining a rose highlight and "BOOSTED" badge for visual clarity.
-- **Tabular Numbers**: All numeric data uses fixed-width digits for perfect vertical alignment.
-- **Pagination**: Navigate through large datasets with customizable page sizes (10, 25, 50, 100 entries).
-
-### 🎨 Premium UI/UX
-- **Modern Design System**: Glassmorphism, subtle shadows, and smooth micro-animations.
-- **Responsive Layout**: Optimized for desktop and large-screen displays.
-- **Centered Search Bar**: Prominent global search in the navbar.
-- **Custom McDonald's Branding**: Integrated McDonald's SVG logo.
+- **Stat Cards** — Total followers, posts, impressions, engagements, and engagement rate
+- **Follower Trends** — Line chart showing monthly growth by platform, with EN/FR language toggle
+- **Performance Chart** — Area chart for any metric over time (daily, weekly, monthly)
+- **Network Breakdown** — Donut chart comparing metrics across platforms
+- **Advanced Filters** — Filter by network, post type, placement, tags, date range, or search term
+- **Content Table** — Sortable, paginated table with boosted post highlighting
 
 ---
 
-## 🖼️ Screenshots
+## Screenshots
 
-<details>
-<summary><strong>📊 Dashboard Overview</strong></summary>
-<br>
-<img src="docs/screenshots/dashboard-overview.png" alt="Dashboard Overview" width="100%">
-<p><em>The main dashboard view showing stat cards, performance chart, network breakdown, and filters.</em></p>
-</details>
+<p align="center">
+  <img src="docs/screenshots/dashboard-overview.png" width="800" alt="Dashboard Overview" />
+  <br />
+  <em>Performance analytics and platform breakdowns</em>
+</p>
 
-<details>
-<summary><strong>🏷️ Filter Interactions</strong></summary>
-<br>
-<img src="docs/screenshots/filter-interactions.png" alt="Filter Interactions" width="100%">
-<p><em>The Campaign Tags filter with emerald-styled chips for intuitive multi-select filtering.</em></p>
-</details>
+<p align="center">
+  <img src="docs/screenshots/filter-interactions.png" width="800" alt="Filter Interactions" />
+  <br />
+  <em>Dynamic filtering by date, network, and tags</em>
+</p>
 
-<details>
-<summary><strong>📋 Content Inventory Table</strong></summary>
-<br>
-<img src="docs/screenshots/content-table.png" alt="Content Table" width="100%">
-<p><em>The detailed content table with sortable columns, Share Ratio, and tabular number formatting.</em></p>
-</details>
+<p align="center">
+  <img src="docs/screenshots/content-table.png" width="800" alt="Content Table" />
+  <br />
+  <em>Detailed content inventory with engagement metrics</em>
+</p> 
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology |
 |----------|------------|
-| **Framework** | [Next.js 16](https://nextjs.org/) (App Router, Turbopack) |
-| **UI Library** | [React 19](https://react.dev/) |
-| **Styling** | [Tailwind CSS 4](https://tailwindcss.com/) |
-| **Components** | [shadcn/ui](https://ui.shadcn.com/) |
-| **Charts** | [Recharts](https://recharts.org/) |
-| **Icons** | [HugeIcons](https://hugeicons.com/) |
-| **Date Handling** | [Day.js](https://day.js.org/) |
-| **CSV Parsing** | [PapaParse](https://www.papaparse.com/) |
-| **Typography** | [Inter Variable](https://rsms.me/inter/) via @fontsource |
-| **Language** | [TypeScript 5](https://www.typescriptlang.org/) |
+| Framework | Next.js 16 (App Router) |
+| UI | React 19, Tailwind CSS 4, shadcn/ui |
+| Charts | Recharts |
+| Icons | HugeIcons |
+| CSV Parsing | PapaParse |
+| Date Handling | Day.js |
+| Language | TypeScript 5 |
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-- **Node.js** 18.17 or later
-- **npm** 9+ or **pnpm** 8+
+
+- Node.js 18.17+
+- npm 9+ or pnpm 8+
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/parthshahanand/csv-dash.git
-   cd csv-dash
-   ```
+```bash
+git clone https://github.com/PastasaurusRex/mcd-organic-insights.git
+cd mcd-organic-insights
+npm install
+```
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+### Add Your Data
 
-3. **Add your data:**
-   Place your CSV file in the `public/` directory as `mcd-data.csv`. The expected columns are:
-   - `Network`, `Post Type`, `Published At`, `Placement`, `Reach`, `Impressions`, `Engagements`, `Engagement Rate`, `Shares`, `Text`, `URL`, `Language`, `Tags`
+Place your CSV in `public/mcd-data.csv`. Required columns:
 
-4. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+```
+Network, Post Type, Published At, Placement, Reach, Impressions, 
+Engagements, Engagement Rate, Shares, Text, URL, Language, Tags
+```
 
-5. **Open in browser:**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+For follower data, add `public/mcd-followers.csv` with monthly follower counts by platform.
 
-### Production Build
+### Run Locally
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+### Build for Production
 
 ```bash
 npm run build
@@ -149,54 +110,39 @@ npm start
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-csv-dash/
-├── public/
-│   ├── mcd-data.csv          # Your source data
-│   └── favicon.png           # Custom favicon
-├── src/
-│   ├── app/
-│   │   ├── layout.tsx        # Root layout with SEO
-│   │   ├── page.tsx          # Main dashboard page
-│   │   └── globals.css       # Global styles & design tokens
-│   ├── components/
-│   │   ├── app-shell.tsx     # Layout wrapper with navbar
-│   │   ├── stat-cards.tsx    # KPI cards including Total Followers
-│   │   ├── followers-chart.tsx # Follower monthly trends
-│   │   ├── performance-chart.tsx
-│   │   ├── network-breakdown.tsx
-│   │   ├── filters-bar.tsx   # All filter controls
-│   │   ├── posts-table.tsx   # Content inventory table
-│   │   └── ui/               # shadcn/ui components
-│   ├── lib/
-│   │   ├── data-context.tsx  # Global state & filtering logic
-│   │   └── csv-parser.ts     # CSV parsing utilities
-│   └── types/
-│       └── post.ts           # TypeScript interfaces
-├── docs/
-│   └── screenshots/          # README images
-├── components.json           # shadcn/ui config
-└── tailwind.config.ts
+src/
+├── app/              # Next.js App Router pages
+├── components/       # Dashboard components
+│   ├── stat-cards.tsx
+│   ├── followers-chart.tsx
+│   ├── performance-chart.tsx
+│   ├── network-breakdown.tsx
+│   ├── filters-bar.tsx
+│   ├── posts-table.tsx
+│   └── ui/           # shadcn/ui primitives
+├── lib/              # Data context and utilities
+└── types/            # TypeScript interfaces
 ```
 
 ---
 
-## 📧 Contact
+## Acknowledgments
 
-For questions, feedback, or collaboration inquiries:
-
-📩 [parth.shahanand@cossette.com](mailto:parth.shahanand@cossette.com)
+- Built with [Google Antigravity](https://www.google.com/)
+- Icons by [HugeIcons](https://hugeicons.com/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
 
 ---
 
-## ⚠️ Disclaimer
+## License
 
-> This project was built using **Google Antigravity**, an AI-powered coding assistant. While every effort has been made to ensure quality and accuracy, please review all code before deploying to production environments.
+All rights reserved. © 2025 Cossette × McDonald's.
 
 ---
 
 <p align="center">
-  <sub>© 2025 Cossette × McDonald's. All rights reserved.</sub>
+<sub>Last reviewed: January 2025</sub>
 </p>

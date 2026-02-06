@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { Post, Filters, DashboardStats, Network, PostType, Language } from '@/types/post';
+import { Post, Filters, DashboardStats } from '@/types/post';
 import { fetchAndParseData } from '@/lib/csv-parser';
 import dayjs from 'dayjs';
 
@@ -12,6 +12,7 @@ interface DataContextType {
     setFilters: React.Dispatch<React.SetStateAction<Filters>>;
     stats: DashboardStats;
     allTags: string[];
+    allYears: string[];
     allPlacements: string[];
     isLoading: boolean;
     error: string | null;
@@ -30,6 +31,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         postTypes: [],
         placements: [],
         selectedMonths: [],
+        selectedYears: [],
         tags: [],
         language: 'ALL',
         searchQuery: '',
@@ -54,6 +56,15 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return Array.from(tags).sort();
     }, [posts]);
 
+    const allYears = useMemo(() => {
+        const years = new Set<string>();
+        posts.forEach((post) => {
+            const year = dayjs(post.publishedAt).format('YYYY');
+            years.add(year);
+        });
+        return Array.from(years).sort((a, b) => b.localeCompare(a)); // Descending order
+    }, [posts]);
+
     const allPlacements = useMemo(() => {
         const placements = new Set<string>();
         posts.forEach((post) => {
@@ -73,6 +84,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             if (filters.selectedMonths.length > 0) {
                 const postMonth = dayjs(post.publishedAt).format('MMMM');
                 if (!filters.selectedMonths.includes(postMonth)) return false;
+            }
+
+            if (filters.selectedYears.length > 0) {
+                const postYear = dayjs(post.publishedAt).format('YYYY');
+                if (!filters.selectedYears.includes(postYear)) return false;
             }
 
             if (filters.dateRange?.from) {
@@ -126,6 +142,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setFilters,
                 stats,
                 allTags,
+                allYears,
                 allPlacements,
                 isLoading,
                 error,

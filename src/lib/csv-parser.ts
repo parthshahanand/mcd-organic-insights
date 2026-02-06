@@ -1,6 +1,6 @@
 import Papa from 'papaparse';
 import dayjs from 'dayjs';
-import { Post, Network, PostType, Language } from '@/types/post';
+import { Post, Network, PostType } from '@/types/post';
 
 interface RawCSVRow {
     'Post ID': string;

@@ -34,7 +34,7 @@ const MONTHS = [
 ];
 
 export const FiltersBar: React.FC = () => {
-    const { filters, setFilters, allPlacements, allTags } = useData();
+    const { filters, setFilters, allPlacements, allTags, allYears } = useData();
 
     const toggleNetwork = (network: Network) => {
         setFilters(prev => ({
@@ -72,6 +72,15 @@ export const FiltersBar: React.FC = () => {
         }));
     };
 
+    const toggleYear = (year: string) => {
+        setFilters(prev => ({
+            ...prev,
+            selectedYears: prev.selectedYears.includes(year)
+                ? prev.selectedYears.filter(y => y !== year)
+                : [...prev.selectedYears, year]
+        }));
+    };
+
     const toggleTag = (tag: string) => {
         setFilters(prev => ({
             ...prev,
@@ -87,6 +96,7 @@ export const FiltersBar: React.FC = () => {
             postTypes: [],
             placements: [],
             selectedMonths: [],
+            selectedYears: [],
             tags: [],
             language: 'ALL',
             searchQuery: '',
@@ -326,6 +336,34 @@ export const FiltersBar: React.FC = () => {
                     <ScrollBar orientation="horizontal" />
                 </ScrollArea>
             </div>
+
+            {/* Year Selector */}
+            {allYears.length > 0 && (
+                <div className="relative">
+                    <ScrollArea className="w-full">
+                        <div className="flex gap-2 pb-2">
+                            {allYears.map((year) => {
+                                const isSelected = filters.selectedYears.includes(year);
+                                return (
+                                    <Button
+                                        key={year}
+                                        variant={isSelected ? 'default' : 'outline'}
+                                        size="sm"
+                                        className={`h-8 px-6 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all ${isSelected
+                                            ? 'bg-primary text-primary-foreground border-primary shadow-md shadow-primary/20'
+                                            : 'text-muted-foreground hover:border-primary/50'
+                                            }`}
+                                        onClick={() => toggleYear(year)}
+                                    >
+                                        {year}
+                                    </Button>
+                                );
+                            })}
+                        </div>
+                        <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
+                </div>
+            )}
         </div>
     );
 };

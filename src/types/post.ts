@@ -25,6 +25,7 @@ export interface Filters {
   postTypes: PostType[];
   placements: string[];
   selectedMonths: string[];
+  selectedYears: string[];
   tags: string[];
   language: Language | 'ALL';
   searchQuery: string;

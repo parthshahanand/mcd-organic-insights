@@ -29,8 +29,6 @@ import {
     Sorting01Icon,
     ArrowLeft01Icon,
     ArrowRight01Icon,
-    ViewIcon,
-    Message01Icon,
     LinkSquare02Icon
 } from '@hugeicons/core-free-icons';
 import dayjs from 'dayjs';
@@ -41,7 +39,9 @@ export const PostsTable: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
+    // Reset to page 1 when filters or page size changes
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrentPage(1);
     }, [filteredPosts, itemsPerPage]);
 
@@ -54,7 +54,7 @@ export const PostsTable: React.FC = () => {
     };
 
     const sortedPosts = useMemo(() => {
-        let sortableItems = [...filteredPosts];
+        const sortableItems = [...filteredPosts];
         if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
                 const aVal = a[sortConfig.key];

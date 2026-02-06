@@ -50,7 +50,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                     {/* Right: Title + GitHub */}
                     <div className="flex-1 flex items-center justify-end gap-4">
                         <div className="text-[12px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors cursor-default">
-                            2025 Organic Insights | Cossette × McDonald's
+                            2025 Organic Insights | Cossette × McDonald&apos;s
                         </div>
                         <a
                             href="https://github.com/parthshahanand/mcd-organic-insights"
