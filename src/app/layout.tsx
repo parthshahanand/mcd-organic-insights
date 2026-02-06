@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
 import "./globals.css";
 import { DataProvider } from "@/lib/data-context";
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Enterprise-grade social media analytics dashboard for McDonald's Canada, providing deep insights into organic performance across TikTok, Instagram, Facebook, and Twitter.",
   keywords: ["McDonald's", "Analytics", "Social Media", "Organic Performance", "Dashboard", "Marketing Insights"],
   authors: [{ name: "McDonald's Canada" }],
-  viewport: "width=device-width, initial-scale=1",
+
   icons: {
     icon: '/favicon.ico',
   },
@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     title: "McDonald's Organic Insights | 2025",
     description: "Enterprise social media analytics dashboard for McDonald's Canada",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

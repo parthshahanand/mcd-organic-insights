@@ -20,15 +20,26 @@ import {
 import Papa from 'papaparse';
 import dayjs from 'dayjs';
 
+interface FollowerCSVRow {
+    Date: string;
+    'FB followers': string;
+    'IGEN followers': string;
+    'IGFR followers': string;
+    'TTEN followers': string;
+    'TTFR followers': string;
+    'XEN followers': string;
+    'XFR followers': string;
+}
+
 export const StatCards: React.FC = () => {
     const { stats, filters } = useData();
-    const [followerData, setFollowerData] = useState<any[]>([]);
+    const [followerData, setFollowerData] = useState<FollowerCSVRow[]>([]);
 
     useEffect(() => {
         fetch('/mcd-followers.csv')
             .then(res => res.text())
             .then(csv => {
-                const result = Papa.parse(csv, { header: true, skipEmptyLines: true });
+                const result = Papa.parse<FollowerCSVRow>(csv, { header: true, skipEmptyLines: true });
                 setFollowerData(result.data);
             });
     }, []);

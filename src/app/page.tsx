@@ -44,7 +44,7 @@ export default function DashboardPage() {
       <div id="overview" className="scroll-mt-20 space-y-2">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">Executive Overview</h1>
         <p className="text-muted-foreground text-sm max-w-2xl">
-          Real-time social media performance metrics for McDonald's Canada campaigns and organic content.
+          Real-time social media performance metrics for McDonald&apos;s Canada campaigns and organic content.
         </p>
       </div>
 

@@ -139,7 +139,7 @@ function Calendar({
             />
           )
         },
-        Chevron: ({ className, orientation, ...props }) => {
+        Chevron: ({ className, orientation }) => {
           if (orientation === "left") {
             return (
               <HugeiconsIcon icon={ArrowLeft01Icon} size={16} className={cn(className)} />
