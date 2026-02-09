@@ -21,10 +21,50 @@ import { ChartLineData01Icon } from '@hugeicons/core-free-icons';
 type Aggregation = 'daily' | 'weekly' | 'monthly';
 type Metric = 'impressions' | 'engagements' | 'engagementRate' | 'shareRatio';
 
+interface ChartDataPoint {
+    date: string;
+    timestamp: number;
+    impressions: number;
+    engagements: number;
+    shares: number;
+    engagementRate: number;
+    shareRatio: number;
+}
+
 export const PerformanceChart: React.FC = () => {
-    const { filteredPosts } = useData();
+    const { filteredPosts, filters, setFilters } = useData();
     const [aggregation, setAggregation] = useState<Aggregation>('daily');
     const [selectedMetric, setSelectedMetric] = useState<Metric>('impressions');
+
+    // Helper to check if a chart point is currently active in the filter
+    const activeChartFilter = filters.dateRange;
+
+    const handleChartClick = (data: { activePayload?: { payload: ChartDataPoint }[] }) => {
+        if (!data?.activePayload?.[0]?.payload) return;
+
+        const { timestamp } = data.activePayload[0].payload;
+        const d = dayjs(timestamp);
+
+        let newRange: { from: Date; to: Date };
+
+        if (aggregation === 'daily') {
+            newRange = { from: d.startOf('day').toDate(), to: d.endOf('day').toDate() };
+        } else if (aggregation === 'weekly') {
+            newRange = { from: d.startOf('week').toDate(), to: d.endOf('week').toDate() };
+        } else { // monthly
+            newRange = { from: d.startOf('month').toDate(), to: d.endOf('month').toDate() };
+        }
+
+        // Toggle logic: If clicking the same range, clear it
+        const isCurrentlySelected = activeChartFilter &&
+            dayjs(activeChartFilter.from).isSame(dayjs(newRange.from), 'day') &&
+            dayjs(activeChartFilter.to).isSame(dayjs(newRange.to), 'day');
+
+        setFilters({
+            ...filters,
+            dateRange: isCurrentlySelected ? undefined : newRange
+        });
+    };
 
     const chartData = React.useMemo(() => {
         const dataMap: Record<string, {
@@ -133,7 +173,12 @@ export const PerformanceChart: React.FC = () => {
             <CardContent className="flex-1 min-h-[400px] pt-4 flex items-center justify-center">
                 {chartData.length > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                        <AreaChart
+                            data={chartData}
+                            margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+                            onClick={handleChartClick}
+                            style={{ cursor: 'pointer' }}
+                        >
                             <defs>
                                 {(Object.keys(metricConfig) as Metric[]).map(m => (
                                     <linearGradient key={m} id={`color${m}`} x1="0" y1="0" x2="0" y2="1">
@@ -175,6 +220,39 @@ export const PerformanceChart: React.FC = () => {
                                 fillOpacity={1}
                                 fill={`url(#color${selectedMetric})`}
                                 animationDuration={1000}
+                                activeDot={{ r: 6, strokeWidth: 0 }}
+                                dot={(props: { cx: number; cy: number; payload: ChartDataPoint }) => {
+                                    const { cx, cy, payload } = props;
+                                    const d = dayjs(payload.timestamp);
+                                    let isActive = false;
+
+                                    if (activeChartFilter?.from && activeChartFilter?.to) {
+                                        const from = dayjs(activeChartFilter.from);
+
+                                        if (aggregation === 'daily') {
+                                            isActive = d.isSame(from, 'day');
+                                        } else if (aggregation === 'weekly') {
+                                            isActive = d.isSame(from, 'day') && d.isSame(dayjs(payload.timestamp).startOf('week'), 'day');
+                                        } else { // monthly
+                                            isActive = d.isSame(from, 'day') && d.isSame(dayjs(payload.timestamp).startOf('month'), 'day');
+                                        }
+                                    }
+
+                                    if (isActive) {
+                                        return (
+                                            <circle
+                                                key={`dot-${payload.timestamp}`}
+                                                cx={cx}
+                                                cy={cy}
+                                                r={5}
+                                                fill={metricConfig[selectedMetric].color}
+                                                stroke="white"
+                                                strokeWidth={2}
+                                            />
+                                        );
+                                    }
+                                    return <React.Fragment key={`dot-empty-${payload.timestamp}`} />;
+                                }}
                             />
                         </AreaChart>
                     </ResponsiveContainer>

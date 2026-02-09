@@ -59,7 +59,12 @@ export const FollowersChart: React.FC = () => {
             .then(res => res.text())
             .then(csv => {
                 const result = Papa.parse<RawFollowerRow>(csv, { header: true, skipEmptyLines: true });
-                setRawData(result.data);
+                // Exclude December 2024 data
+                const filteredData = result.data.filter(row => {
+                    const d = dayjs(row.Date);
+                    return !(d.month() === 11 && d.year() === 2024);
+                });
+                setRawData(filteredData);
                 setIsLoading(false);
             })
             .catch(err => {
