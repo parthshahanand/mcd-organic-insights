@@ -104,15 +104,25 @@ export const FiltersBar: React.FC = () => {
         });
     };
 
+    const hasAnyFilter = filters.networks.length > 0 ||
+        filters.postTypes.length > 0 ||
+        filters.placements.length > 0 ||
+        filters.selectedMonths.length > 0 ||
+        filters.selectedYears.length > 0 ||
+        filters.tags.length > 0 ||
+        filters.language !== 'ALL' ||
+        filters.searchQuery !== '' ||
+        filters.dateRange !== undefined;
+
     return (
-        <div className="space-y-4 animate-in" style={{ animationDelay: '200ms' }}>
-            <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-col gap-4">
+            <div className="flex flex-wrap items-center gap-2">
                 {/* Network Filter */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 gap-2">
                             <HugeiconsIcon icon={GlobalIcon} size={16} />
-                            Network
+                            Networks
                             {filters.networks.length > 0 && (
                                 <Badge variant="secondary" className="ml-1 rounded-sm px-1 font-normal">
                                     {filters.networks.length}
@@ -123,13 +133,14 @@ export const FiltersBar: React.FC = () => {
                     <DropdownMenuContent align="start" className="w-[200px]">
                         <DropdownMenuLabel>Social Platforms</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        {['TIKTOK', 'INSTAGRAM', 'FACEBOOK', 'TWITTER'].map((n) => (
+                        {(['TIKTOK', 'INSTAGRAM', 'FACEBOOK', 'TWITTER'] as Network[]).map((network) => (
                             <DropdownMenuCheckboxItem
-                                key={n}
-                                checked={filters.networks.includes(n as Network)}
-                                onCheckedChange={() => toggleNetwork(n as Network)}
+                                key={network}
+                                checked={filters.networks.includes(network)}
+                                onCheckedChange={() => toggleNetwork(network)}
+                                className="text-xs font-medium"
                             >
-                                {n}
+                                {network.charAt(0) + network.slice(1).toLowerCase()}
                             </DropdownMenuCheckboxItem>
                         ))}
                     </DropdownMenuContent>
@@ -305,11 +316,104 @@ export const FiltersBar: React.FC = () => {
                     size="sm"
                     className="h-9 text-muted-foreground hover:text-destructive transition-colors"
                     onClick={resetFilters}
+                    disabled={!hasAnyFilter}
                 >
                     <HugeiconsIcon icon={Cancel01Icon} size={16} className="mr-2" />
                     Reset All
                 </Button>
             </div>
+
+            {hasAnyFilter && (
+                <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border/10">
+                    {/* Date Range Badge */}
+                    {filters.dateRange && (
+                        <Badge variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in slide-in-from-left-2">
+                            <HugeiconsIcon icon={Calendar01Icon} size={12} />
+                            <span className="text-[10px] font-bold uppercase tracking-wider">
+                                {dayjs(filters.dateRange.from).isSame(dayjs(filters.dateRange.to), 'day')
+                                    ? dayjs(filters.dateRange.from).format('MMM DD, YYYY')
+                                    : `${dayjs(filters.dateRange.from).format('MMM DD')} - ${dayjs(filters.dateRange.to).format('MMM DD, YYYY')}`}
+                            </span>
+                            <button
+                                onClick={() => setFilters({ ...filters, dateRange: undefined })}
+                                className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity"
+                            >
+                                <HugeiconsIcon icon={Cancel01Icon} size={12} />
+                            </button>
+                        </Badge>
+                    )}
+
+                    {/* Networks Badges */}
+                    {filters.networks.map(n => (
+                        <Badge key={n} variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">{n}</span>
+                            <button onClick={() => toggleNetwork(n)} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    ))}
+
+                    {/* Post Types Badges */}
+                    {filters.postTypes.map(t => (
+                        <Badge key={t} variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">{t}</span>
+                            <button onClick={() => togglePostType(t)} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    ))}
+
+                    {/* Placements Badges */}
+                    {filters.placements.map(p => (
+                        <Badge key={p} variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">{p}</span>
+                            <button onClick={() => togglePlacement(p)} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    ))}
+
+                    {/* Month Badges */}
+                    {filters.selectedMonths.map(m => (
+                        <Badge key={m} variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">{m}</span>
+                            <button onClick={() => toggleMonth(m)} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    ))}
+
+                    {/* Year Badges */}
+                    {filters.selectedYears.map(y => (
+                        <Badge key={y} variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">{y}</span>
+                            <button onClick={() => toggleYear(y)} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    ))}
+
+                    {/* Tag Badges */}
+                    {filters.tags.map(t => (
+                        <Badge key={t} variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">{t}</span>
+                            <button onClick={() => toggleTag(t)} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    ))}
+
+                    {/* Language Badge */}
+                    {filters.language !== 'ALL' && (
+                        <Badge variant="secondary" className="h-7 px-2 bg-amber-50 text-amber-600 border-amber-200 flex items-center gap-1.5 animate-in fade-in zoom-in-95">
+                            <span className="text-[10px] font-bold uppercase tracking-wider">Language: {filters.language}</span>
+                            <button onClick={() => setFilters(prev => ({ ...prev, language: 'ALL' }))} className="hover:text-amber-800 opacity-60 hover:opacity-100 transition-opacity">
+                                <HugeiconsIcon icon={Cancel01Icon} size={10} />
+                            </button>
+                        </Badge>
+                    )}
+                </div>
+            )}
 
             {/* Month Selector */}
             <div className="relative">
