@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { Upload01Icon, LockKeyIcon, CheckmarkCircle01Icon, Alert01Icon, Delete01Icon } from '@hugeicons/core-free-icons';
+import { Upload01Icon, LockKeyIcon, CheckmarkCircle01Icon, Alert01Icon, Delete01Icon, ArrowRight01Icon } from '@hugeicons/core-free-icons';
 
 interface FollowerCSVRow {
     Date: string;
@@ -322,14 +322,12 @@ export default function AdminPage() {
                     </Card>
                 </div>
  
-                {followersStatus.success && postsStatus.success && (
-                    <div className="flex justify-center animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        <Link href="/" className="group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-full font-bold uppercase tracking-[0.2em] text-sm hover:scale-105 hover:shadow-2xl transition-all">
-                            Return to Dashboard
-                            <HugeiconsIcon icon={CheckmarkCircle01Icon} size={20} className="text-emerald-400" />
-                        </Link>
-                    </div>
-                )}
+                <div className="flex justify-center pt-4">
+                    <Link href="/" className="group flex items-center gap-3 bg-foreground text-background px-8 py-4 rounded-full font-bold uppercase tracking-[0.2em] text-[10px] hover:scale-105 hover:shadow-2xl transition-all">
+                        Return to Dashboard
+                        <HugeiconsIcon icon={ArrowRight01Icon} size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
 
                 {/* Danger Zone */}
                 <div className="pt-8 border-t border-border/40">
